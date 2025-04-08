@@ -1,5 +1,6 @@
+// main.js
 import { renderProducts } from './ui.js';
-import { renderCartItems, updateCart } from './cart.js';
+import { renderCartItems, updateCart, setupCheckout } from './cart.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize cart
@@ -10,11 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('openNav').addEventListener('click', () => {
     sideNav.classList.add('active');
   });
-  
   document.getElementById('closeNav').addEventListener('click', () => {
     sideNav.classList.remove('active');
   });
   
+  // Close nav when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.side-navbar') && !e.target.closest('.nav-toggle')) {
+      sideNav.classList.remove('active');
+    }
+  });
+
   // Determine which page we're on and render appropriate content
   const path = window.location.pathname.split('/').pop();
   
@@ -30,15 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
     case 'cart.html':
       renderCartItems();
+      setupCheckout();
       break;
     default:
       renderProducts();
   }
-  
-  // Close nav when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.side-navbar') && !e.target.closest('.nav-toggle')) {
-      sideNav.classList.remove('active');
-    }
-  });
 });

@@ -74,14 +74,6 @@
       <p>&copy; <span id="currentYear"></span> TrendyCloth. All rights reserved.</p>
     </div>
   </footer>
-  <script>
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      const total = document.getElementById('cartTotal').textContent.replace('$', '');
-      localStorage.setItem('lastOrderTotal', total);
-      localStorage.removeItem('cart');
-      window.location.href = `order-confirmation.html?total=${total}`;
-    });
-  </script>
   <script type="module" src="scripts/main.js"></script>
 </body>
 </html>

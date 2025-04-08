@@ -61,25 +61,10 @@
       <p>&copy; <span id="currentYear"></span> TrendyCloth. All rights reserved.</p>
     </div>
   </footer>
-
   <script type="module">
-    // Generate random order number
-    document.getElementById('orderNumber').textContent = Math.floor(Math.random() * 1000000);
-    
-    // Display current date
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-US', options);
-    
-    // Get total from URL parameter or localStorage
-    const urlParams = new URLSearchParams(window.location.search);
-    const total = urlParams.get('total') || localStorage.getItem('lastOrderTotal') || '0.00';
-    document.getElementById('orderTotal').textContent = parseFloat(total).toFixed(2);
-    
-    // Clear cart after order
-    localStorage.removeItem('cart');
-    document.getElementById('cartCount').textContent = '0';
+    import { setupOrderConfirmation } from './scripts/order-confirmation.js';
+    document.addEventListener('DOMContentLoaded', setupOrderConfirmation);
   </script>
-  
   <script type="module" src="scripts/main.js"></script>
 </body>
 </html>
