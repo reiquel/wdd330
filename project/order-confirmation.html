@@ -3,30 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TrendyCloth - Your shopping cart">
-  <title>Your Cart | TrendyCloth</title>
-  
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Your Cart | TrendyCloth">
-  <meta property="og:description" content="Review your TrendyCloth shopping cart">
-  
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  
-  <!-- CSS -->
+  <title>Order Confirmation | TrendyCloth</title>
   <link rel="stylesheet" href="styles/small.css">
   <link rel="stylesheet" href="styles/large.css" media="(min-width: 768px)">
 </head>
 <body>
   <header class="header">
     <button id="openNav" class="nav-toggle" aria-label="Open menu">☰</button>
-    <h1 class="logo">Your Cart</h1>
+    <h1 class="logo">Order Confirmation</h1>
     <div class="cart-icon" id="cartIcon">
       🛒 <span class="cart-count" id="cartCount">0</span>
     </div>
@@ -39,19 +23,22 @@
       <li><a href="mens.html" class="nav-link">Men</a></li>
       <li><a href="womens.html" class="nav-link">Women</a></li>
       <li><a href="accessories.html" class="nav-link">Accessories</a></li>
-      <li><a href="cart.html" class="nav-link active">Cart</a></li>
+      <li><a href="cart.html" class="nav-link">Cart</a></li>
     </ul>
   </nav>
 
-  <main class="main-content cart-page">
-    <section class="cart-container">
-      <h2 class="cart-title">Your Shopping Cart</h2>
-      <div id="cartItems">
-        <!-- Cart items will be injected here -->
-      </div>
-      <div class="cart-summary">
-        <p class="cart-total">Total: <span id="cartTotal">$0.00</span></p>
-        <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+  <main class="main-content">
+    <section class="confirmation-container">
+      <div class="confirmation-card">
+        <div class="confirmation-icon">✓</div>
+        <h2>Order Confirmed!</h2>
+        <p class="confirmation-message">Thank you for your purchase. Your order has been received and is being processed.</p>
+        <div class="order-details">
+          <p><strong>Order Number:</strong> #TRENDY-<span id="orderNumber"></span></p>
+          <p><strong>Date:</strong> <span id="orderDate"></span></p>
+          <p><strong>Total:</strong> $<span id="orderTotal"></span></p>
+        </div>
+        <a href="index.html" class="continue-shopping">Continue Shopping</a>
       </div>
     </section>
   </main>
@@ -74,14 +61,25 @@
       <p>&copy; <span id="currentYear"></span> TrendyCloth. All rights reserved.</p>
     </div>
   </footer>
-  <script>
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      const total = document.getElementById('cartTotal').textContent.replace('$', '');
-      localStorage.setItem('lastOrderTotal', total);
-      localStorage.removeItem('cart');
-      window.location.href = `order-confirmation.html?total=${total}`;
-    });
+
+  <script type="module">
+    // Generate random order number
+    document.getElementById('orderNumber').textContent = Math.floor(Math.random() * 1000000);
+    
+    // Display current date
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-US', options);
+    
+    // Get total from URL parameter or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const total = urlParams.get('total') || localStorage.getItem('lastOrderTotal') || '0.00';
+    document.getElementById('orderTotal').textContent = parseFloat(total).toFixed(2);
+    
+    // Clear cart after order
+    localStorage.removeItem('cart');
+    document.getElementById('cartCount').textContent = '0';
   </script>
+  
   <script type="module" src="scripts/main.js"></script>
 </body>
 </html>

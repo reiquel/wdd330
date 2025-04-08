@@ -17,6 +17,7 @@ export function removeFromCart(productId) {
   cart = cart.filter(item => item.id !== productId);
   updateCart();
   saveCart();
+  renderCartItems()
 }
 
 export function getCartTotal() {
@@ -67,4 +68,11 @@ export function renderCartItems() {
   if (cartTotal) {
     cartTotal.textContent = `$${getCartTotal().toFixed(2)}`;
   }
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-item')) {
+      const productId = parseInt(e.target.dataset.id);
+      removeFromCart(productId);
+    }
+  });
+
 }
