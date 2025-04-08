@@ -1,4 +1,3 @@
-// cart.js
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(product) {
@@ -12,6 +11,7 @@ export function addToCart(product) {
   
   updateCart();
   saveCart();
+  return true;
 }
 
 export function removeFromCart(productId) {
@@ -45,7 +45,8 @@ export function renderCartItems() {
   if (!cartContainer) return;
   
   if (cart.length === 0) {
-    cartContainer.innerHTML = '<p>Your cart is empty</p>';
+    cartContainer.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+    document.getElementById('cartTotal').textContent = '0.00';
     return;
   }
   
@@ -53,7 +54,7 @@ export function renderCartItems() {
     <div class="cart-item">
       <div class="cart-item-info">
         <h4>${item.name}</h4>
-        <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
+        <p>$${item.price.toFixed(2)} × ${item.quantity}</p>
       </div>
       <button class="remove-item" data-id="${item.id}">Remove</button>
     </div>
@@ -67,7 +68,7 @@ export function renderCartItems() {
   
   const cartTotal = document.getElementById('cartTotal');
   if (cartTotal) {
-    cartTotal.textContent = `$${getCartTotal().toFixed(2)}`;
+    cartTotal.textContent = getCartTotal().toFixed(2);
   }
 }
 

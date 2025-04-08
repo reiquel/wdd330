@@ -1,23 +1,53 @@
-export function setupOrderConfirmation() {
-  // Generate random order number
-  document.getElementById('orderNumber').textContent = 
-    Math.floor(Math.random() * 1000000);
-  
-  // Display current date
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('orderDate').textContent = 
-    new Date().toLocaleDateString('en-US', options);
-  
-  // Get total from URL parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  const total = urlParams.get('total') || '0.00';
-  document.getElementById('orderTotal').textContent = 
-    parseFloat(total).toFixed(2);
-  
-  // Update cart count to 0
-  document.getElementById('cartCount').textContent = '0';
-  
-  // Set current year in footer
-  document.getElementById('currentYear').textContent = 
-    new Date().getFullYear();
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation | TrendyCloth</title>
+  <link rel="stylesheet" href="styles/small.css">
+  <link rel="stylesheet" href="styles/large.css" media="(min-width: 768px)">
+</head>
+<body>
+  <header class="header">
+    <button id="openNav" class="nav-toggle" aria-label="Open menu">☰</button>
+    <h1 class="logo">Order Confirmed!</h1>
+    <a href="cart.html" class="cart-icon" id="cartIcon">
+      🛒 <span class="cart-count" id="cartCount">0</span>
+    </a>
+  </header>
+
+  <nav class="side-navbar" id="sideNavbar">
+    <button id="closeNav" class="close-btn" aria-label="Close menu">×</button>
+    <ul class="nav-list">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="mens.html" class="nav-link">Men</a></li>
+      <li><a href="womens.html" class="nav-link">Women</a></li>
+      <li><a href="accessories.html" class="nav-link">Accessories</a></li>
+      <li><a href="cart.html" class="nav-link">Cart</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <section class="confirmation-container">
+      <div class="confirmation-card">
+        <div class="confirmation-icon">✓</div>
+        <h2>Thank You For Your Order!</h2>
+        <p class="confirmation-message">Your order has been confirmed and will be processed shortly.</p>
+        <div class="order-details">
+          <p><strong>Order Number:</strong> #TRENDY-<span id="orderNumber"></span></p>
+          <p><strong>Date:</strong> <span id="orderDate"></span></p>
+          <p><strong>Total:</strong> $<span id="orderTotal"></span></p>
+        </div>
+        <a href="index.html" class="continue-shopping">Continue Shopping</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <!-- Same footer as index.html -->
+  </footer>
+
+  <script type="module" src="scripts/confirmation.js"></script>
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>
