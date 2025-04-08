@@ -1,6 +1,5 @@
-// main.js
 import { renderProducts } from './ui.js';
-import { renderCartItems, updateCart, setupCheckout } from './cart.js';
+import { renderCartItems, setupCheckout, updateCart } from './cart.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize cart
@@ -8,21 +7,34 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Set up navigation
   const sideNav = document.getElementById('sideNavbar');
-  document.getElementById('openNav').addEventListener('click', () => {
-    sideNav.classList.add('active');
-  });
-  document.getElementById('closeNav').addEventListener('click', () => {
-    sideNav.classList.remove('active');
-  });
+  const openNav = document.getElementById('openNav');
+  const closeNav = document.getElementById('closeNav');
+  
+  if (openNav) {
+    openNav.addEventListener('click', () => {
+      sideNav.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+  
+  if (closeNav) {
+    closeNav.addEventListener('click', () => {
+      sideNav.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
   
   // Close nav when clicking outside
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('.side-navbar') && !e.target.closest('.nav-toggle')) {
+    if (!e.target.closest('.side-navbar') && 
+        !e.target.closest('.nav-toggle') &&
+        sideNav.classList.contains('active')) {
       sideNav.classList.remove('active');
+      document.body.style.overflow = '';
     }
   });
 
-  // Determine which page we're on and render appropriate content
+  // Determine which page we're on
   const path = window.location.pathname.split('/').pop();
   
   switch(path) {
@@ -39,7 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCartItems();
       setupCheckout();
       break;
+    case 'order-confirmation.html':
+      // Handled by order-confirmation.js
+      break;
     default:
       renderProducts();
   }
+  
+  // Set current year in footer
+  document.getElementById('currentYear').textContent = new Date().getFullYear();
 });

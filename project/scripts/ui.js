@@ -1,5 +1,5 @@
 import { products } from './products.js';
-import { addToCart, updateCart } from './cart.js';
+import { addToCart } from './cart.js';
 
 export function renderProducts(category) {
   const productGrid = document.getElementById('productGrid');
@@ -28,7 +28,14 @@ export function renderProducts(category) {
         .flat()
         .find(p => p.id === productId);
       if (product) {
-        addToCart(product);
+        if (addToCart(product)) {
+          // Animation for added item
+          const card = e.target.closest('.product-card');
+          card.style.transform = 'scale(1.05)';
+          setTimeout(() => {
+            card.style.transform = '';
+          }, 300);
+        }
       }
     });
   });
