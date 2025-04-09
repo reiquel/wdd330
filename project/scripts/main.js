@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setupCheckout();
       break;
     case 'order-confirmation.html':
-      // Handled by order-confirmation.js
+      setupOrderConfirmation();
       break;
     default:
       renderProducts();

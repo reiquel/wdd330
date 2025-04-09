@@ -1,23 +1,20 @@
+// In order-confirmation.js, ensure we're getting the total correctly:
 export function setupOrderConfirmation() {
-  // Generate random order number
-  document.getElementById('orderNumber').textContent = 
-    Math.floor(Math.random() * 1000000);
-  
-  // Display current date
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('orderDate').textContent = 
-    new Date().toLocaleDateString('en-US', options);
-  
-  // Get total from URL parameter
+  // Get total from URL parameters
   const urlParams = new URLSearchParams(window.location.search);
-  const total = urlParams.get('total') || '0.00';
-  document.getElementById('orderTotal').textContent = 
-    parseFloat(total).toFixed(2);
+  let total = urlParams.get('total') || localStorage.getItem('lastOrderTotal') || '0.00';
   
-  // Update cart count to 0
+  // Format the total to 2 decimal places
+  total = parseFloat(total).toFixed(2);
+  
+  // Update the display
+  document.getElementById('orderTotal').textContent = total;
+  
+  // Rest of your confirmation code...
+  document.getElementById('orderNumber').textContent = Math.floor(Math.random() * 1000000);
+  
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-US', options);
+  
   document.getElementById('cartCount').textContent = '0';
-  
-  // Set current year in footer
-  document.getElementById('currentYear').textContent = 
-    new Date().getFullYear();
 }

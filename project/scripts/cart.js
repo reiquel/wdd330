@@ -72,18 +72,25 @@ export function renderCartItems() {
   }
 }
 
+// In cart.js, modify the setupCheckout function:
 export function setupCheckout() {
-  const checkoutBtn = document.getElementById('checkoutBtn');
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
+  const checkoutForm = document.getElementById('checkoutForm');
+  const orderTotalInput = document.getElementById('orderTotalInput');
+  
+  if (checkoutForm) {
+    checkoutForm.addEventListener('submit', (e) => {
       if (cart.length === 0) {
+        e.preventDefault();
         alert('Your cart is empty. Please add items before checkout.');
         return;
       }
+      
       const total = getCartTotal().toFixed(2);
+      orderTotalInput.value = total;
       localStorage.setItem('lastOrderTotal', total);
       localStorage.removeItem('cart');
-      window.location.href = `order-confirmation.html?total=${total}`;
+      
+      // Allow the form to submit naturally
     });
   }
 }
