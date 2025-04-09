@@ -18,3 +18,5 @@ export function setupOrderConfirmation() {
   
   document.getElementById('cartCount').textContent = '0';
 }
+
+setupOrderConfirmation();
