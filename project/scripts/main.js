@@ -1,5 +1,6 @@
 import { renderProducts } from './ui.js';
 import { renderCartItems, setupCheckout, updateCart } from './cart.js';
+import { setupOrderConfirmation } from './confirmation.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize cart
